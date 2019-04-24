@@ -3,5 +3,5 @@
 .DS_Store
 __pycache__/
 car_detector.egg-info/
-venv/*
-.pytest_cache/*
+venv/
+.pytest_cache/
