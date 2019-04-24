@@ -54,7 +54,7 @@ class CarDetector:
         return prediction[0][0]
 
     def _display_response(self, prediction):
-        if prediction == 1:
+        if prediction == 0:
             print(self.CAR_DISPLAY)
         else:
             print(self.NOT_CAR_DISPLAY)

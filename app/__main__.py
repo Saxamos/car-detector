@@ -11,7 +11,7 @@ argument_parser.add_argument('-s', '--saved', help='Folder to save images', defa
 argument_parser.add_argument('-p', '--processing', help='Use processing', action='store_true')
 args = argument_parser.parse_args()
 
-pi_camera = PiCamera()
+pi_camera = PiCamera(resolution=(256,256))
 print('Loading {} model'.format(args.model))
 model = load_model(args.model)
 

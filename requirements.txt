@@ -1,0 +1,5 @@
+numpy
+pillow
+keras==2.2.4
+tensorflow
+freezegun
