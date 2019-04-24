@@ -13,7 +13,7 @@ class TestCarDetector(unittest.TestCase):
     def setUp(self):
         pi_camera = MagicMock()
         self.current_folder = os.path.join(ROOT_PATH, 'tests/raspberry/data')
-        model = load_model(self.current_folder + '/model.h5')
+        model = load_model(os.path.join(ROOT_PATH, 'model') + '/model.h5')
         self.car_detector = CarDetector(pi_camera, model, saved_folder=self.current_folder)
 
     def test_display_response_with_car_prediction(self):
@@ -38,7 +38,7 @@ class TestCarDetector(unittest.TestCase):
 
     def test_predict_if_car_return_right_inference(self):
         # Given
-        image_path_gen = (self.current_folder + f'/{name}.jpg' for name in
+        image_path_gen = (os.path.join(ROOT_PATH, 'picture') + f'/{name}.jpg' for name in
                           ('car_1', 'car_2', 'not_in_train_data_scarab', 'to_thin_car', 'sax'))
 
         # When
