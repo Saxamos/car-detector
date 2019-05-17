@@ -5,3 +5,4 @@ __pycache__/
 car_detector.egg-info/
 venv/
 .pytest_cache/
+photobooth_car/
