@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/Saxamos/car-detector.svg?branch=master)](https://travis-ci.com/Saxamos/car-detector)
+
 # car-detector
 A car detection app for raspberry
 
