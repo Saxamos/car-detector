@@ -28,11 +28,11 @@ setup(
         'tensorflow==1.13.1',
         'freezegun==0.3.11',
     ],
-    extras_require={
-        'dev': [
-            'pytest',
-        ]
-    },
+    # extras_require={
+    #     'dev': [
+    #         'pytest',
+    #     ]
+    # },
     classifiers=[
         'Programming Language :: Python :: 3.6',
         'License :: OSI Approved :: MIT License',

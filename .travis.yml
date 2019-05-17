@@ -3,6 +3,6 @@ python:
   - "3.6"
 cache: pip
 install:
-  - pip install -e .[dev]
+  - pip install -e .
 script:
   - python -m unittest discover -s tests
