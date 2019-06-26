@@ -1,8 +1,6 @@
-# Created by .ignore support plugin (hsz.mobi)
 .idea/
 .DS_Store
 __pycache__/
 car_detector.egg-info/
-venv/
 .pytest_cache/
-photobooth_car/
+data/picture

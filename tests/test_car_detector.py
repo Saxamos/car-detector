@@ -2,11 +2,11 @@ import os
 import unittest
 from unittest.mock import MagicMock
 
+from car_detector import CarDetector
 from freezegun import freeze_time
 from keras.engine.saving import load_model
 
 from app import ROOT_PATH
-from app.car_detector import CarDetector
 
 
 class TestCarDetector(unittest.TestCase):

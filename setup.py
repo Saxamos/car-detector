@@ -2,17 +2,14 @@ from setuptools import setup, find_packages
 
 setup(
     name='car-detector',
-    version='1.0',
+    version='2.0',
     packages=find_packages(exclude=['tests', 'tests.*']),
     license='MIT license',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    entry_points={
-        'console_scripts': [
-            'detect = app.__main__:main',
-        ]
-    },
+    entry_points={'console_scripts': ['car_detector = app.__main__:car_detector']},
     include_package_data=True,
+    # TODO
     # package_data={
     #     'profil_generation_template': [
     #         'simulator/profil_generation_template/*',
@@ -21,6 +18,7 @@ setup(
     #         'simulator/povray.pov'
     #     ],
     # },
+    # TODO
     install_requires=[
         'numpy==1.16.2',
         'Pillow==5.2.0',
@@ -28,6 +26,7 @@ setup(
         'tensorflow==1.13.1',
         'freezegun==0.3.11',
     ],
+    # TODO
     # extras_require={
     #     'dev': [
     #         'pytest',
