@@ -44,6 +44,7 @@ class GifFrame(tkinter.Frame):
 
     def button_agree(self):
         self.tk_parent_frame.show_frame(f'{self.mode}_frame')
+        # TODO: add real response
         os.rename(os.path.join(ROOT_PATH, 'data', 'picture', 'last_capture.jpg'),
                   os.path.join(ROOT_PATH, 'data', 'picture', 'agree.jpg'))
 

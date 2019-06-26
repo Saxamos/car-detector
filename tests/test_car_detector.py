@@ -9,6 +9,7 @@ from keras.engine.saving import load_model
 from app import ROOT_PATH
 
 
+# TODO: test
 class TestCarDetector(unittest.TestCase):
     def setUp(self):
         pi_camera = MagicMock()
