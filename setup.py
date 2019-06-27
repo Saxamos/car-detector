@@ -19,13 +19,13 @@ setup(
     #     ],
     # },
     # TODO
-    install_requires=[
-        'numpy==1.16.2',
-        'Pillow==5.2.0',
-        'keras==2.2.4',
-        'tensorflow==1.13.1',
-        'freezegun==0.3.11',
-    ],
+    # install_requires=[
+    #     'click==6.7',
+    #     'keras==2.2.4',
+    #     'cv2'
+    #     'numpy==1.16.2'
+    #     'Pillow==5.2.0'
+    # ],
     # TODO
     # extras_require={
     #     'dev': [

@@ -3,4 +3,4 @@
 __pycache__/
 car_detector.egg-info/
 .pytest_cache/
-data/picture
+data/picture/*

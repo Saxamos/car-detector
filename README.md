@@ -10,9 +10,9 @@ running:
 
 ### Install the app
 
-Install the app in your virtual env
+Install the app in your virtual env. At the root of the project, run:
 ```
-pip install -e setup.py
+pip install -e .
 ```
 
 ### Run the tests
@@ -22,14 +22,14 @@ TODO
 
 ### Launch the app
 
-With camera
+Run the folllowing command to load the app with camera:
 ```
-camera_detector
+car_detector camera
 ```
 
-With clicking mouse drawing
+With clicking mouse drawing and optionnal arguments:
 ```
-draw_detector
+car_detector draw --model <path/to/model> --saved <path/to/save/image>
 ```
 
 ### Related article

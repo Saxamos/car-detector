@@ -6,7 +6,7 @@ from app.gif_frame import GifFrame
 
 
 class ParentFrame(tkinter.Tk):
-    DEFAULT_PREDICTED_CLASS = 0
+    DEFAULT_PREDICTED_CLASS = 'car'
 
     def __init__(self, mode, model, saved_path):
         tkinter.Tk.__init__(self)
@@ -24,11 +24,13 @@ class ParentFrame(tkinter.Tk):
         return container
 
     def _create_frames(self, mode, model, saved_path):
-        frames = {
-            'draw_frame': DrawFrame(self, model, saved_path),
-            'camera_frame': CameraFrame(self, model, saved_path),
-            'gif_frame': GifFrame(self, mode)
-        }
+        frames = {'gif_frame': GifFrame(self, mode)}
+
+        if mode == 'draw':
+            frames['draw_frame'] = DrawFrame(self, model, saved_path)
+        if mode == 'camera':
+            frames['camera_frame'] = CameraFrame(self, model, saved_path),
+
         for frame in frames.values():
             frame.grid(row=0, column=0, sticky='nsew')
         return frames

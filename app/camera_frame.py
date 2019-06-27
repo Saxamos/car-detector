@@ -10,12 +10,13 @@ class CameraFrame(tkinter.Frame):
     WELCOME_MESSAGE = """Welcome to the car drawing detector !
     Click on the button below
     and draw something"""
-    DEFAULT_SECONDS_TO_DRAW = 5
 
-    def __init__(self, tk_parent_frame, model, saved_path):
-        tkinter.Frame.__init__(self, tk_parent_frame.container)
+    CLASS_MAPPING = {0: 'car', 1: 'not_car'}
 
-        self.tk_parent_frame = tk_parent_frame
+    def __init__(self, parent_frame, model, saved_path):
+        tkinter.Frame.__init__(self, parent_frame.container)
+
+        self.parent_frame = parent_frame
         self.text = tkinter.Label(self, text=self.WELCOME_MESSAGE, font='{Comic Sans MS} 16')
         self.text.grid(padx=30, pady=80)
 
@@ -57,7 +58,6 @@ class CameraFrame(tkinter.Frame):
         image.save(os.path.join(self.saved_path, 'last_capture.jpg'))
         image = np.array(Image.fromarray(np.array(image)).convert('RGB')).reshape((1, 128, 128, 3))
 
-        prediction = self.model.predict_classes(image)[0][0]
-        self.tk_parent_frame.predicted_class = prediction
-        self.tk_parent_frame.frames['gif_frame'].index = 0
-        self.tk_parent_frame.show_frame('gif_frame')
+        self.parent_frame.predicted_class = self.CLASS_MAPPING[self.model.predict_classes(image)[0][0]]
+        self.parent_frame.frames['gif_frame'].index = 0
+        self.parent_frame.show_frame('gif_frame')
