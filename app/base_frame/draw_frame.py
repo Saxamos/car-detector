@@ -1,31 +1,23 @@
 import os
-import tkinter as tk
+import tkinter
 
 import numpy as np
 from PIL import Image, ImageDraw
 
+from app.base_frame.base_frame import BaseFrame
 
-class DrawFrame(tk.Frame):
-    WELCOME_MESSAGE = """Welcome to the car drawing detector !
-    Click on the button below
-    and draw something"""
 
+class DrawFrame(BaseFrame):
     DEFAULT_SECONDS_TO_DRAW = 5
 
-    CLASS_MAPPING = {0: 'car', 1: 'not_car'}
-
     def __init__(self, parent_frame, model, saved_path):
-        tk.Frame.__init__(self, parent_frame.container)
+        super().__init__(parent_frame, model, saved_path)
 
-        self.parent_frame = parent_frame
-        self.text = tk.Label(self, text=self.WELCOME_MESSAGE, font='{Comic Sans MS} 16')
-        self.text.grid(padx=30, pady=80)
-
-        self.button_start = tk.Button(self, text=f'{self.DEFAULT_SECONDS_TO_DRAW} seconds to draw',
-                                      command=self.display_canvas)
+        self.text_button_start = f'{self.DEFAULT_SECONDS_TO_DRAW} seconds to draw'
+        self.button_start = tkinter.Button(self, text=self.text_button_start, command=self.display_canvas)
         self.button_start.grid(padx=30)
 
-        self.canvas = tk.Canvas(self, width=460, height=300)
+        self.canvas = tkinter.Canvas(self, width=460, height=300)
         self.image = Image.new('RGB', (460, 300), (255, 255, 255))
         self.draw = ImageDraw.Draw(self.image)
         self.canvas.old_coords = None
@@ -33,12 +25,9 @@ class DrawFrame(tk.Frame):
 
         self.draw_timer = self.DEFAULT_SECONDS_TO_DRAW
 
-        self.label = tk.Label(self, fg='green')
         self.label.config(text=self.draw_timer)
 
-        self.model = model
-        self.saved_path = saved_path
-
+    # TODO: abstract this method
     def display_canvas(self):
         self.button_start.grid_forget()
         self.text.grid_forget()
@@ -70,9 +59,11 @@ class DrawFrame(tk.Frame):
         self.canvas.old_coords = x, y
         self.canvas.event_time = event_time
 
+    # TODO: abstract this method
     def make_inference(self):
         self.canvas.delete('all')
         self.canvas.grid_forget()
+
         self.label.grid_forget()
 
         image = self.image.resize((128, 128)).convert('L')
@@ -87,4 +78,3 @@ class DrawFrame(tk.Frame):
         self.parent_frame.predicted_class = self.CLASS_MAPPING[self.model.predict_classes(image)[0][0]]
         self.parent_frame.frames['gif_frame'].index = 0
         self.parent_frame.show_frame('gif_frame')
-        # TODO: create abstarct class for mode frame

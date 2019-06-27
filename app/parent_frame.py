@@ -1,8 +1,8 @@
 import tkinter
 
-from app.camera_frame import CameraFrame
-from app.draw_frame import DrawFrame
-from app.gif_frame import GifFrame
+from app.base_frame.camera_frame import CameraFrame
+from app.base_frame.draw_frame import DrawFrame
+from app.response_frame.gif_frame import GifFrame
 
 
 class ParentFrame(tkinter.Tk):

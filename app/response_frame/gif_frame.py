@@ -2,6 +2,7 @@ import os
 import tkinter
 
 from PIL import ImageTk, Image
+
 from app import ROOT_PATH
 
 
