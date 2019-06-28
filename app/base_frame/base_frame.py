@@ -15,7 +15,7 @@ class BaseFrame(ABC, tkinter.Frame):
         self.parent_frame = parent_frame
 
         self.text = tkinter.Label(self, text=self.WELCOME_MESSAGE, font='{Comic Sans MS} 16')
-        self.text.grid(padx=30, pady=80)
+        self.text.grid(padx=parent_frame.mid_width, pady=parent_frame.mid_height)
 
         self.label = tkinter.Label(self, fg='green')
 

@@ -7,9 +7,17 @@ from app.response_frame.gif_frame import GifFrame
 
 class ParentFrame(tkinter.Tk):
     DEFAULT_PREDICTED_CLASS = 'car'
+    NORMALIZATION_COEF = 2.5
 
     def __init__(self, mode, model, saved_path):
         tkinter.Tk.__init__(self)
+
+        self.width = self.winfo_screenwidth()
+        self.height = self.winfo_screenheight()
+        self.mid_width = int(self.winfo_screenwidth() / self.NORMALIZATION_COEF)
+        self.mid_height = int(self.winfo_screenheight() / self.NORMALIZATION_COEF)
+        # self.overrideredirect(True)  # use the next line if you also want to get rid of the titlebar
+        self.geometry(f'{self.width}x{self.height}+0+0')
 
         self.predicted_class = self.DEFAULT_PREDICTED_CLASS
         self.container = self._create_container()
