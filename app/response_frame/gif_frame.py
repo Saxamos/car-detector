@@ -1,4 +1,5 @@
 import os
+import time
 import tkinter
 
 from PIL import ImageTk, Image
@@ -40,14 +41,15 @@ class GifFrame(tkinter.Frame):
 
     def button_agree(self):
         self.parent_frame.show_frame(f'{self.mode}_frame')
+        picture_name = f'{self.parent_frame.predicted_class}_agree_{int(time.time())}.jpg'
         os.rename(os.path.join(ROOT_PATH, 'data', 'picture', 'last_capture.jpg'),
-                  os.path.join(ROOT_PATH, 'data', 'picture', f'{self.parent_frame.predicted_class}_agree.jpg'))
+                  os.path.join(ROOT_PATH, 'data', 'picture', picture_name))
 
     def button_disagree(self):
-        # TODO: change name not to overwrite older images
         self.parent_frame.show_frame(f'{self.mode}_frame')
+        picture_name = f'{self.parent_frame.predicted_class}_agree_{int(time.time())}.jpg'
         os.rename(os.path.join(ROOT_PATH, 'data', 'picture', 'last_capture.jpg'),
-                  os.path.join(ROOT_PATH, 'data', 'picture', f'{self.parent_frame.predicted_class}_disagree.jpg'))
+                  os.path.join(ROOT_PATH, 'data', 'picture', picture_name))
 
     def animate(self):
         image = self.gif_images[self.parent_frame.predicted_class][self.index]
