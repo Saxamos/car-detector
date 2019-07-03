@@ -3,6 +3,7 @@ import tkinter
 from abc import ABC
 
 import numpy as np
+from PIL import Image
 
 
 class BaseFrame(ABC, tkinter.Frame):
@@ -32,7 +33,7 @@ class BaseFrame(ABC, tkinter.Frame):
         self.text.grid(padx=self.parent_frame.mid_width, pady=self.parent_frame.mid_height)
         self.button_start.grid()
 
-        image = self.image.resize((self.MODEL_HEIGHT, self.MODEL_WIDTH)).convert('L')
+        image = self.image.resize((self.MODEL_HEIGHT, self.MODEL_WIDTH), Image.ANTIALIAS).convert('L')
         image.save(os.path.join(self.saved_path, 'last_capture.jpg'))
         image = np.array(image.convert('RGB')).reshape((1, self.MODEL_HEIGHT, self.MODEL_WIDTH, 3))
 

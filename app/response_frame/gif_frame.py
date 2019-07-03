@@ -47,7 +47,7 @@ class GifFrame(tkinter.Frame):
 
     def button_disagree(self):
         self.parent_frame.show_frame(f'{self.mode}_frame')
-        picture_name = f'{self.parent_frame.predicted_class}_agree_{int(time.time())}.jpg'
+        picture_name = f'{self.parent_frame.predicted_class}_disagree_{int(time.time())}.jpg'
         os.rename(os.path.join(ROOT_PATH, 'data', 'picture', 'last_capture.jpg'),
                   os.path.join(ROOT_PATH, 'data', 'picture', picture_name))
 
