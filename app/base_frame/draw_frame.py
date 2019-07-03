@@ -1,7 +1,5 @@
-import os
 import tkinter
 
-import numpy as np
 from PIL import Image, ImageDraw
 
 from app.base_frame.base_frame import BaseFrame
@@ -11,8 +9,6 @@ class DrawFrame(BaseFrame):
     DEFAULT_SECONDS_TO_DRAW = 10
     MAX_PIXEL_INTENSITY = 255
     MIN_PIXEL_INTENSITY = 0
-    MODEL_HEIGHT = 128
-    MODEL_WIDTH = 128
     COUNTER_TEXT = 100
 
     def __init__(self, parent_frame, model, saved_path):
@@ -23,17 +19,13 @@ class DrawFrame(BaseFrame):
         self.button_start.grid()
 
         self.canvas = tkinter.Canvas(self, width=parent_frame.width, height=parent_frame.height - self.COUNTER_TEXT)
-        self.image = Image.new('RGB', (parent_frame.width, parent_frame.height),
-                               (self.MAX_PIXEL_INTENSITY, self.MAX_PIXEL_INTENSITY, self.MAX_PIXEL_INTENSITY))
-        self.draw = ImageDraw.Draw(self.image)
+        self._initialize_image()
         self.canvas.old_coords = None
         self.canvas.event_time = None
 
         self.draw_timer = self.DEFAULT_SECONDS_TO_DRAW
-
         self.label.config(text=self.draw_timer)
 
-    # TODO: abstract this method
     def display_canvas(self):
         self.button_start.grid_forget()
         self.text.grid_forget()
@@ -43,7 +35,6 @@ class DrawFrame(BaseFrame):
         self.counter_label()
 
     def counter_label(self):
-        # TODO: omagad pls refactome
         def count():
             self.draw_timer -= 1
             if self.draw_timer != 0:
@@ -67,23 +58,13 @@ class DrawFrame(BaseFrame):
         self.canvas.old_coords = x, y
         self.canvas.event_time = event_time
 
-    # TODO: abstract this method
     def make_inference(self):
         self.canvas.delete('all')
         self.canvas.grid_forget()
+        self._infer()
+        self._initialize_image()
 
-        self.label.grid_forget()
-
-        image = self.image.resize((self.MODEL_HEIGHT, self.MODEL_WIDTH)).convert('L')
+    def _initialize_image(self):
         self.image = Image.new('RGB', (self.parent_frame.width, self.parent_frame.height),
                                (self.MAX_PIXEL_INTENSITY, self.MAX_PIXEL_INTENSITY, self.MAX_PIXEL_INTENSITY))
         self.draw = ImageDraw.Draw(self.image)
-        self.text.grid(padx=self.parent_frame.mid_width, pady=self.parent_frame.mid_height)
-        self.button_start.grid()
-
-        image.save(os.path.join(self.saved_path, 'last_capture.jpg'))
-        image = np.array(image.convert('RGB')).reshape((1, self.MODEL_HEIGHT, self.MODEL_WIDTH, 3))
-
-        self.parent_frame.predicted_class = self.CLASS_MAPPING[self.model.predict_classes(image)[0][0]]
-        self.parent_frame.frames['gif_frame'].index = 0
-        self.parent_frame.show_frame('gif_frame')
