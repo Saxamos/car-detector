@@ -37,7 +37,7 @@ class ParentFrame(tkinter.Tk):
         if mode == 'draw':
             frames['draw_frame'] = DrawFrame(self, model, saved_path)
         if mode == 'camera':
-            frames['camera_frame'] = CameraFrame(self, model, saved_path),
+            frames['camera_frame'] = CameraFrame(self, model, saved_path)
 
         for frame in frames.values():
             frame.grid(row=0, column=0, sticky='nsew')

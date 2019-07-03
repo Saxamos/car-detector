@@ -9,7 +9,7 @@ from app.base_frame.base_frame import BaseFrame
 
 
 class CameraFrame(BaseFrame):
-
+    # TODO: resize everything
     def __init__(self, parent_frame, model, saved_path):
         super().__init__(parent_frame, model, saved_path)
 
@@ -44,6 +44,8 @@ class CameraFrame(BaseFrame):
         self.button_snapshot.grid_forget()
         self.text.grid(padx=30, pady=80)
         self.button_start.grid(padx=30)
+
+        # TODO: ilmplem threshold https://github.com/zenr/ippy/blob/master/segmentation/max_entropy.py
 
         image = self.img.resize((128, 128)).convert('L')
         image.save(os.path.join(self.saved_path, 'last_capture.jpg'))

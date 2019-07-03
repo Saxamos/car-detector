@@ -8,18 +8,21 @@ from app.base_frame.base_frame import BaseFrame
 
 
 class DrawFrame(BaseFrame):
-    DEFAULT_SECONDS_TO_DRAW = 5
+    DEFAULT_SECONDS_TO_DRAW = 10
     MAX_PIXEL_INTENSITY = 255
     MIN_PIXEL_INTENSITY = 0
+    MODEL_HEIGHT = 128
+    MODEL_WIDTH = 128
+    COUNTER_TEXT = 100
 
     def __init__(self, parent_frame, model, saved_path):
         super().__init__(parent_frame, model, saved_path)
 
         self.text_button_start = f'{self.DEFAULT_SECONDS_TO_DRAW} seconds to draw'
         self.button_start = tkinter.Button(self, text=self.text_button_start, command=self.display_canvas)
-        self.button_start.grid(padx=parent_frame.mid_width)
+        self.button_start.grid()
 
-        self.canvas = tkinter.Canvas(self, width=parent_frame.width, height=parent_frame.height)
+        self.canvas = tkinter.Canvas(self, width=parent_frame.width, height=parent_frame.height - self.COUNTER_TEXT)
         self.image = Image.new('RGB', (parent_frame.width, parent_frame.height),
                                (self.MAX_PIXEL_INTENSITY, self.MAX_PIXEL_INTENSITY, self.MAX_PIXEL_INTENSITY))
         self.draw = ImageDraw.Draw(self.image)
@@ -57,7 +60,7 @@ class DrawFrame(BaseFrame):
         event_time = event.time
         if self.canvas.old_coords and (event_time - self.canvas.event_time) < 200:
             x1, y1 = self.canvas.old_coords
-            self.canvas.create_line(x, y, x1, y1)
+            self.canvas.create_line(x, y, x1, y1, width=3)
             self.draw.line([x, y, x1, y1],
                            (self.MIN_PIXEL_INTENSITY, self.MIN_PIXEL_INTENSITY, self.MIN_PIXEL_INTENSITY),
                            5)
@@ -71,14 +74,15 @@ class DrawFrame(BaseFrame):
 
         self.label.grid_forget()
 
-        image = self.image.resize((128, 128)).convert('L')
-        self.image = Image.new('RGB', (460, 300), (255, 255, 255))
+        image = self.image.resize((self.MODEL_HEIGHT, self.MODEL_WIDTH)).convert('L')
+        self.image = Image.new('RGB', (self.parent_frame.width, self.parent_frame.height),
+                               (self.MAX_PIXEL_INTENSITY, self.MAX_PIXEL_INTENSITY, self.MAX_PIXEL_INTENSITY))
         self.draw = ImageDraw.Draw(self.image)
         self.text.grid(padx=self.parent_frame.mid_width, pady=self.parent_frame.mid_height)
-        self.button_start.grid(padx=30)
+        self.button_start.grid()
 
         image.save(os.path.join(self.saved_path, 'last_capture.jpg'))
-        image = np.array(image.convert('RGB')).reshape((1, 128, 128, 3))
+        image = np.array(image.convert('RGB')).reshape((1, self.MODEL_HEIGHT, self.MODEL_WIDTH, 3))
 
         self.parent_frame.predicted_class = self.CLASS_MAPPING[self.model.predict_classes(image)[0][0]]
         self.parent_frame.frames['gif_frame'].index = 0
