@@ -9,7 +9,7 @@ class ParentFrame(tkinter.Tk):
     DEFAULT_PREDICTED_CLASS = 'car'
     NORMALIZATION_COEF = 2.5
 
-    def __init__(self, mode, model, saved_path):
+    def __init__(self, mode, model, saved_path, viz_activation):
         tkinter.Tk.__init__(self)
 
         self.width = self.winfo_screenwidth()
@@ -21,6 +21,7 @@ class ParentFrame(tkinter.Tk):
 
         self.predicted_class = self.DEFAULT_PREDICTED_CLASS
         self.container = self._create_container()
+        self.viz_activation = viz_activation
         self.frames = self._create_frames(mode, model, saved_path)
         self.show_frame(f'{mode}_frame')
 
