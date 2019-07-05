@@ -39,6 +39,3 @@ car_detector draw --model <path/to/model> --saved <path/to/save/image>
 [Article 2: deploy it on a raspberry](https://blog.octo.com/lia-embarquee-entrainer-deployer-et-utiliser-du-deep-learning-sur-un-raspberry-partie-2/)
 
 [Article 3: use the model and enhance it](https://blog.octo.com/lia-embarquee-entrainer-deployer-et-utiliser-du-deep-learning-sur-un-raspberry-partie-3/)
-
-
-TODO: add archi schemes
