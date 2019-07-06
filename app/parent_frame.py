@@ -20,19 +20,22 @@ class ParentFrame(tkinter.Tk):
         self.geometry(f'{self.width}x{self.height}+0+0')
 
         self.predicted_class = self.DEFAULT_PREDICTED_CLASS
-        self.container = self._create_container()
+        self.container = self.__create_container()
         self.viz_activation = viz_activation
-        self.frames = self._create_frames(mode, model, saved_path)
+        self.frames = self.__create_frames(mode, model, saved_path)
         self.show_frame(f'{mode}_frame')
 
-    def _create_container(self):
+    def show_frame(self, frame):
+        self.frames[frame].tkraise()
+
+    def __create_container(self):
         container = tkinter.Frame(self)
         container.pack(side='top', fill='both', expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
         return container
 
-    def _create_frames(self, mode, model, saved_path):
+    def __create_frames(self, mode, model, saved_path):
         frames = {'gif_frame': GifFrame(self, mode)}
 
         if mode == 'draw':
@@ -43,6 +46,3 @@ class ParentFrame(tkinter.Tk):
         for frame in frames.values():
             frame.grid(row=0, column=0, sticky='nsew')
         return frames
-
-    def show_frame(self, frame):
-        self.frames[frame].tkraise()

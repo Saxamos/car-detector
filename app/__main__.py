@@ -7,6 +7,10 @@ from keras.models import load_model
 from app import ROOT_PATH
 from app.parent_frame import ParentFrame
 
+logging.getLogger('tensorflow').setLevel(logging.ERROR)
+
+logging.basicConfig(level=logging.INFO)
+
 
 @click.command()
 @click.argument('mode', click.Choice({'draw', 'camera'}))
@@ -14,7 +18,7 @@ from app.parent_frame import ParentFrame
               help='Model path')
 @click.option('--saved', '-s', type=click.Path(exists=True), default=os.path.join(ROOT_PATH, 'data', 'picture'),
               help='Folder to save images')
-@click.option('--viz_activation', '-v', type=click.BOOL, default=False)
+@click.option('--viz_activation', '-v', is_flag=True, type=click.BOOL, default=False)
 def car_detector(mode, model, saved, viz_activation):
     logging.info(f'Loading {model} model')
     model_instance = load_model(model)

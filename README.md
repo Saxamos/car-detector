@@ -32,6 +32,18 @@ With clicking mouse drawing and optionnal arguments:
 car_detector draw --model <path/to/model> --saved <path/to/save/image>
 ```
 
+### Train a model
+
+The modelisation notebook can be found at the root of the project. The data comes from the google quick draw application.
+Usefull command for port forwarding (if you use ec2 instance):
+```bash
+ssh -L <local:port>:localhost:<distant:port> <user>@<ip-adress>
+# example to forward tensorboard:
+# todo: plot tensorboard train and eval curve on same plot to compare more easily
+ssh -L 8881:localhost:6006 ubuntu@34.240.13.93
+
+```
+
 ### Related article
 
 [Article 1: train your model](https://blog.octo.com/ia-embarquee-deployer-du-deep-learning-sur-un-raspberry/)
