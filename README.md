@@ -39,3 +39,17 @@ car_detector draw --model <path/to/model> --saved <path/to/save/image>
 [Article 2: deploy it on a raspberry](https://blog.octo.com/lia-embarquee-entrainer-deployer-et-utiliser-du-deep-learning-sur-un-raspberry-partie-2/)
 
 [Article 3: use the model and enhance it](https://blog.octo.com/lia-embarquee-entrainer-deployer-et-utiliser-du-deep-learning-sur-un-raspberry-partie-3/)
+
+### Schemes
+
+#### Hardware issues on ARM
+
+![ARMaggedon](assets/x86_vs_arm.png)
+
+#### Use Ansible to configure Raspbian on QEMU
+
+![Hans Ziebel](assets/ansible.png)
+
+#### Pipeline overview
+
+![Pipeline](assets/qemu_pipeline.png)
