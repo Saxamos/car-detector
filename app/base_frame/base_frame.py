@@ -39,8 +39,8 @@ class BaseFrame(ABC, tkinter.Frame):
         image.save(os.path.join(self.saved_path, 'last_capture.jpg'))
         image = np.array(image.convert('RGB')).reshape((1, self.MODEL_HEIGHT, self.MODEL_WIDTH, 3))
 
-        # TODO: parametrize this
-        # self._interpret_model(image)
+        if self.parent_frame.viz_activation:
+            self._interpret_model(image)
 
         self.parent_frame.predicted_class = self.CLASS_MAPPING[self.model.predict_classes(image * 1 / 255)[0][0]]
         self.parent_frame.frames['gif_frame'].index = 0
