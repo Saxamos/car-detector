@@ -1,6 +1,7 @@
 import tkinter
 
 import cv2
+import matplotlib.pyplot as plt
 import numpy as np
 from PIL import ImageTk, Image
 
@@ -43,17 +44,21 @@ class CameraFrame(BaseFrame):
         self.label.configure(image=imgtk)
         self.label.after(1, self.__video_stream)
 
-    @staticmethod
-    def __binarize_image(image):
-        threshold = CameraFrame.__get_threshold(image)
+    def __binarize_image(self, image):
+        threshold = self.__get_threshold(image)
         image[image < threshold] = 0
         image[image >= threshold] = 255
         return Image.fromarray(image)
 
-    @staticmethod
-    def __get_threshold(image):
+    def __get_threshold(self, image):
         hist = np.histogram(image, bins=256, range=(0, 256))[0]
-        return CameraFrame.__max_entropy(hist)
+        threshold = CameraFrame.__max_entropy(hist)
+
+        if self.parent_frame.viz_entropy:
+            plt.plot(hist)
+            plt.axvline(x=threshold, color='r')
+            plt.show()
+        return threshold
 
     @staticmethod
     def __max_entropy(data):
