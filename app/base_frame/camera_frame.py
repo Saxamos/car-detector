@@ -51,39 +51,42 @@ class CameraFrame(BaseFrame):
         return Image.fromarray(image)
 
     def __get_threshold(self, image):
-        hist = np.histogram(image, bins=256, range=(0, 256))[0]
-        threshold = CameraFrame.__max_entropy(hist)
+        pixel_intensity_histogram = np.histogram(image, bins=256, range=(0, 256))[0]
+        threshold = self.__max_entropy(pixel_intensity_histogram)
 
         if self.parent_frame.viz_entropy:
-            plt.plot(hist)
+            plt.plot(pixel_intensity_histogram)
             plt.axvline(x=threshold, color='r')
             plt.show()
         return threshold
 
-    @staticmethod
-    def __max_entropy(data):
+    def __max_entropy(self, histogram):
         """
-        Implements Kapur-Sahoo-Wong (Maximum Entropy) thresholding method
         "A New Method for Gray-Level Picture Thresholding Using the Entropy of the Histogram"
         Kapur J.N., Sahoo P.K., and Wong A.K.C. (1985)
         https://github.com/zenr/ippy/blob/master/segmentation/max_entropy.py
-        :param data: Sequence representing the histogram of the image
+        :param histogram: Sequence representing the histogram of the image
         :return threshold: Resulting maximum entropy threshold
         """
-        cdf = data.astype(np.float).cumsum()  # calculate CDF (cumulative density function)
-        valid_idx = np.nonzero(data)[0]  # find histogram's nonzero area
-        first_bin, last_bin = valid_idx[0], valid_idx[-1]
-        max_ent, threshold = 0, 0  # initialize search for maximum
-        for pix_intensity in range(first_bin, last_bin + 1):
-            # Background (dark)
-            hist_range = data[:pix_intensity + 1]
-            hist_range = hist_range[hist_range != 0] / cdf[pix_intensity]  # normalize within range & remove zeros
-            tot_ent = -np.sum(hist_range * np.log(hist_range))  # background entropy
-            # Foreground/Object (bright)
-            hist_range = data[pix_intensity + 1:]
-            hist_range = hist_range[hist_range != 0] / (cdf[last_bin] - cdf[pix_intensity])
-            tot_ent -= np.sum(hist_range * np.log(hist_range))  # accumulate object entropy
-            # find max
-            if tot_ent > max_ent:
-                max_ent, threshold = tot_ent, pix_intensity
-        return threshold
+        cdf = histogram.astype(np.float).cumsum()
+        non_null_bin_indexes = np.nonzero(histogram)[0]
+
+        max_entropy, best_threshold = 0, 0
+        for i in range(len(non_null_bin_indexes)):
+            dark_histogram = histogram[non_null_bin_indexes[:i + 1]]
+            number_of_pixel_in_dark_histogram = cdf[non_null_bin_indexes[i]]
+            dark_entropy = self.__compute_entropy(dark_histogram, number_of_pixel_in_dark_histogram)
+
+            bright_histogram = histogram[non_null_bin_indexes[i + 1:]]
+            number_of_pixel_in_bright_histogram = cdf[-1] - cdf[non_null_bin_indexes[i]]
+            bright_entropy = self.__compute_entropy(bright_histogram, number_of_pixel_in_bright_histogram)
+
+            entropy = dark_entropy + bright_entropy
+            if entropy > max_entropy:
+                max_entropy, best_threshold = entropy, i + 1
+        return best_threshold
+
+    @staticmethod
+    def __compute_entropy(histogram, number_of_pixel_in_histogram):
+        probability_density_function = histogram / number_of_pixel_in_histogram
+        return -np.sum(probability_density_function * np.log(probability_density_function))

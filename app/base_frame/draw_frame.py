@@ -1,13 +1,12 @@
 import tkinter
 
-import numpy as np
 from PIL import Image, ImageDraw
 
 from app.base_frame.base_frame import BaseFrame
 
 
 class DrawFrame(BaseFrame):
-    DEFAULT_SECONDS_TO_DRAW = 5
+    DEFAULT_SECONDS_TO_DRAW = 15
     MAX_PIXEL_INTENSITY = 255
     MIN_PIXEL_INTENSITY = 0
     COUNTER_TEXT = 100
@@ -33,7 +32,7 @@ class DrawFrame(BaseFrame):
 
         image = self._resize_and_convert_input_image(self.image)
 
-        self._infer(np.array(image))
+        self._infer(image)
         self.__initialize_draw_image()
 
     def __initialize_draw_image(self):
