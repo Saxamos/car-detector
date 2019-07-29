@@ -90,3 +90,49 @@ class CameraFrame(BaseFrame):
     def __compute_entropy(histogram, number_of_pixel_in_histogram):
         probability_density_function = histogram / number_of_pixel_in_histogram
         return -np.sum(probability_density_function * np.log(probability_density_function))
+
+
+"""
+for multiclass grey level segmentation
+"""
+# def __binarize_image(self, image):
+#     threshold = self.__get_threshold(image)
+#     image[image < threshold[0]] = 0
+#     image[image >= threshold[1]] = 255
+#     image[(image != 0) & (image != 255)] = 120
+#     return Image.fromarray(image)
+#
+# def __get_threshold(self, image):
+#     pixel_intensity_histogram = np.histogram(image, bins=256, range=(0, 256))[0]
+#     threshold = self.__max_entropy(pixel_intensity_histogram)
+#
+#     if self.parent_frame.viz_entropy:
+#         plt.plot(pixel_intensity_histogram)
+#         plt.axvline(x=threshold[0], color='r')
+#         plt.axvline(x=threshold[1], color='r')
+#         plt.show()
+#     return threshold
+#
+# def __max_entropy(self, histogram):
+#     cdf = histogram.astype(np.float).cumsum()
+#     non_null_bin_indexes = np.nonzero(histogram)[0]
+#
+#     max_entropy, best_threshold = 0, (0, 0)
+#     for i in range(len(non_null_bin_indexes)):
+#         for j in range(i, len(non_null_bin_indexes)):
+#             dark_histogram = histogram[non_null_bin_indexes[:i + 1]]
+#             number_of_pixel_in_dark_histogram = cdf[non_null_bin_indexes[i]]
+#             dark_entropy = self.__compute_entropy(dark_histogram, number_of_pixel_in_dark_histogram)
+#
+#             mid_histogram = histogram[non_null_bin_indexes[i + 1:j + 1]]
+#             number_of_pixel_in_mid_histogram = cdf[non_null_bin_indexes[j]] - cdf[non_null_bin_indexes[i]]
+#             mid_entropy = self.__compute_entropy(mid_histogram, number_of_pixel_in_mid_histogram)
+#
+#             bright_histogram = histogram[non_null_bin_indexes[j + 1:]]
+#             number_of_pixel_in_bright_histogram = cdf[-1] - cdf[non_null_bin_indexes[j]]
+#             bright_entropy = self.__compute_entropy(bright_histogram, number_of_pixel_in_bright_histogram)
+#
+#             entropy = dark_entropy + bright_entropy + mid_entropy
+#             if entropy > max_entropy:
+#                 max_entropy, best_threshold = entropy, (i + 1, j + 1)
+#     return best_threshold
