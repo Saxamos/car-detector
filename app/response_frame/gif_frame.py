@@ -33,21 +33,21 @@ class GifFrame(tkinter.Frame):
         self.animate()
 
     def _create_tk_image_list(self, gif_name, image_number):
-        gif_frames = (f'frame_{str(x + 1).zfill(2)}.jpg' for x in range(image_number))
+        gif_frames = ('frame_{}.jpg'.format(str(x + 1).zfill(2)) for x in range(image_number))
         gif_paths = (os.path.join(ROOT_PATH, 'data', gif_name, frame) for frame in gif_frames)
         gif_images = (Image.open(path) for path in gif_paths)
         size = self.parent_frame.mid_height, self.parent_frame.mid_width
         return [ImageTk.PhotoImage(image=image.resize(size)) for image in gif_images]
 
     def button_agree(self):
-        self.parent_frame.show_frame(f'{self.mode}_frame')
-        picture_name = f'{self.parent_frame.predicted_class}_agree_{int(time.time())}.jpg'
+        self.parent_frame.show_frame('{}_frame'.format(self.mode))
+        picture_name = '{}_agree_{}.jpg'.format(self.parent_frame.predicted_class, int(time.time()))
         os.rename(os.path.join(ROOT_PATH, 'data', 'picture', 'last_capture.jpg'),
                   os.path.join(ROOT_PATH, 'data', 'picture', picture_name))
 
     def button_disagree(self):
-        self.parent_frame.show_frame(f'{self.mode}_frame')
-        picture_name = f'{self.parent_frame.predicted_class}_disagree_{int(time.time())}.jpg'
+        self.parent_frame.show_frame('{}_frame'.format(self.mode))
+        picture_name = '{}_agree_{}.jpg'.format(self.parent_frame.predicted_class, int(time.time()))
         os.rename(os.path.join(ROOT_PATH, 'data', 'picture', 'last_capture.jpg'),
                   os.path.join(ROOT_PATH, 'data', 'picture', picture_name))
 

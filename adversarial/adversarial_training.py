@@ -29,7 +29,7 @@ confidence = model.predict(input_image)[0, 0]
 # Convert the predictions into text and print them
 CLASS_MAPPING = {0: 'car', 1: 'not_car'}
 predicted_classes = CLASS_MAPPING[prediction]
-print(f'This is a {predicted_classes} with {confidence * 100:.4}% confidence!')
+# print(f'This is a {predicted_classes} with {confidence * 100:.4}% confidence!')
 
 # Grab a reference to the first and last layer of the neural net
 model_input_layer = model.layers[0].input
@@ -78,7 +78,7 @@ while cost > 0.005:
     hacked_image = np.clip(hacked_image, max_change_below, max_change_above)
     hacked_image = np.clip(hacked_image, 0, 1.0)
 
-    print(f'Model\'s predicted likelihood that the image is a car: {(1 - cost) * 100:.8}')
+    # print(f'Model\'s predicted likelihood that the image is a car: {(1 - cost) * 100:.8}')
 
 # De-scale the image's pixels from [0, 1] back to the [0, 255] range
 descaled_input_image = input_image[0] * 255.

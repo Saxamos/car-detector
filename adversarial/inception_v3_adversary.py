@@ -33,7 +33,7 @@ predictions = model.predict(input_image)
 # Convert the predictions into text and print them
 predicted_classes = inception_v3.decode_predictions(predictions, top=1)
 imagenet_id, name, confidence = predicted_classes[0][0]
-print(f'This is a {name} with {confidence * 100:.4}% confidence!')
+# print(f'This is a {name} with {confidence * 100:.4}% confidence!')
 
 # Grab a reference to the first and last layer of the neural net
 model_input_layer = model.layers[0].input
@@ -87,7 +87,7 @@ while cost < 0.80:
     hacked_image = np.clip(hacked_image, max_change_below, max_change_above)
     hacked_image = np.clip(hacked_image, -1.0, 1.0)
 
-    print(f'Model\'s predicted likelihood that the image is a red_wine: {cost * 100:.8}')
+    # print(f'Model\'s predicted likelihood that the image is a red_wine: {cost * 100:.8}')
 
 # De-scale the image's pixels from [-1, 1] back to the [0, 255] range
 img = hacked_image[0]

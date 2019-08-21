@@ -18,8 +18,8 @@ def load_image_and_predict_class(img_path):
     prediction = model.predict_classes(input_image)[0, 0]
     confidence = model.predict(input_image)[0, 0]
     predicted_classes = CLASS_MAPPING[prediction]
-    print(f'This is a {predicted_classes}')
-    print(f'Probability to belong to class car: {1 - confidence:.3}')
+    print('This is a {}'.format(predicted_classes))
+    print('Probability to belong to class car: {:.3}'.format(1 - confidence))
 
 
 print('\nHack:')
