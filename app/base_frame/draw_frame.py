@@ -14,7 +14,7 @@ class DrawFrame(BaseFrame):
     def __init__(self, parent_frame, model, saved_path):
         super().__init__(parent_frame, model, saved_path)
 
-        self.text_button_start = '{} seconds to draw'.format(self.DEFAULT_SECONDS_TO_DRAW)
+        self.text_button_start = f'{self.DEFAULT_SECONDS_TO_DRAW} seconds to draw'
         self.button_start = tkinter.Button(self, text=self.text_button_start, command=self.__display_canvas)
         self.button_start.grid()
 

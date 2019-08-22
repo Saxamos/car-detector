@@ -21,7 +21,7 @@ logging.basicConfig(level=logging.INFO)
 @click.option('--viz-activation', '-va', is_flag=True, type=click.BOOL, default=False)
 @click.option('--viz-entropy', '-ve', is_flag=True, type=click.BOOL, default=False)
 def car_detector(mode, model, saved, viz_activation, viz_entropy):
-    logging.info('Loading model')
+    logging.info(f'Loading {model} model')
     model_instance = load_model(model)
     app = ParentFrame(mode, model_instance, saved, viz_activation, viz_entropy)
     app.mainloop()

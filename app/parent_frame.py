@@ -17,14 +17,14 @@ class ParentFrame(tkinter.Tk):
         self.mid_width = int(self.winfo_screenwidth() / self.NORMALIZATION_COEF)
         self.mid_height = int(self.winfo_screenheight() / self.NORMALIZATION_COEF)
         # self.overrideredirect(True)  # use the next line if you also want to get rid of the titlebar
-        self.geometry('{}x{}+0+0'.format(self.width, self.height))
+        self.geometry(f'{self.width}x{self.height}+0+0')
 
         self.predicted_class = self.DEFAULT_PREDICTED_CLASS
         self.container = self.__create_container()
         self.viz_activation = viz_activation
         self.viz_entropy = viz_entropy
         self.frames = self.__create_frames(mode, model, saved_path)
-        self.show_frame('{}_frame'.format(mode))
+        self.show_frame(f'{mode}_frame')
 
     def show_frame(self, frame):
         self.frames[frame].tkraise()
