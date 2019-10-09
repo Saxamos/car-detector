@@ -23,7 +23,7 @@ def load_image_and_predict_class(img_path):
 
 
 print('\nHack:')
-load_image_and_predict_class(os.path.join(ROOT_PATH, 'adversarial', 'hacked_image.png'))
+load_image_and_predict_class(os.path.join(ROOT_PATH, 'adversarial', 'hacked_parrot.png'))
 
 print('\nOriginal:')
-load_image_and_predict_class(os.path.join(ROOT_PATH, 'adversarial', 'input_image.png'))
+load_image_and_predict_class(os.path.join(ROOT_PATH, 'adversarial', 'resized_parrot.png'))

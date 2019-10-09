@@ -47,15 +47,16 @@ object_type_to_fake = 966
 # Pre-calculate the maximum change we will allow to the image
 # We'll make sure our hacked image never goes past this so it doesn't look funny.
 # A larger number produces an image faster but risks more distortion.
-distortion = 0.01
+distortion = 0.3
 max_change_above = input_image + distortion
 max_change_below = input_image - distortion
 
-# Create a copy of the input image to hack on
+# Create a copy of the input image to hack on and give crop of image that we want to modify
 hacked_image = np.copy(input_image)
+hacked_image_crop = hacked_image[:, 200:, 200:, :]
 
 # How much to update the hacked image in each iteration
-learning_rate = 0.1
+learning_rate = 10
 
 # Define the cost function.
 # Our 'cost' will be the likelihood out image is the target class according to the pre-trained model
@@ -78,16 +79,20 @@ while cost < 0.80:
     # can use to push it one more step in that direction.
     # Note: It's really important to pass in '0' for the Keras learning mode here!
     # Keras layers behave differently in prediction vs. train modes!
-    cost, gradients = grab_cost_and_gradients_from_model([hacked_image, 0])
+    cost, gradients = grab_cost_and_gradients_from_model([hacked_image_crop, 0])
+    cost_global, _ = grab_cost_and_gradients_from_model([hacked_image, 0])
 
     # Move the hacked image one step further towards fooling the model
-    hacked_image += gradients * learning_rate
+    hacked_image_crop += gradients * learning_rate
+    hacked_image[:, 200:, 200:, :] += gradients * learning_rate
 
     # Ensure that the image doesn't ever change too much to either look funny or to become an invalid image
-    hacked_image = np.clip(hacked_image, max_change_below, max_change_above)
+    # hacked_image = np.clip(hacked_image, max_change_below, max_change_above)
     hacked_image = np.clip(hacked_image, -1.0, 1.0)
+    hacked_image_crop = np.clip(hacked_image_crop, -1.0, 1.0)
 
-    print(f'Model\'s predicted likelihood that the image is a red_wine: {cost * 100:.8}')
+    print(f'Model\'s predicted likelihood that the crop is a red_wine: {cost * 100:.8}')
+    print(f'Model\'s predicted likelihood that the image is a red_wine: {cost_global * 100:.8}')
 
 # De-scale the image's pixels from [-1, 1] back to the [0, 255] range
 img = hacked_image[0]
@@ -97,4 +102,4 @@ img *= 255.
 
 # Save the hacked image!
 im = Image.fromarray(img.astype(np.uint8))
-im.save('hacked_image.png')
+im.save('toto.png')

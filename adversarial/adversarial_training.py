@@ -82,7 +82,7 @@ while cost > 0.005:
 
 # De-scale the image's pixels from [0, 1] back to the [0, 255] range
 descaled_input_image = input_image[0] * 255.
-Image.fromarray(descaled_input_image.astype(np.uint8)).save('input_image.png')
+Image.fromarray(descaled_input_image.astype(np.uint8)).save('resized_parrot.png')
 
 descaled_hacked_image = hacked_image[0] * 255.
-Image.fromarray(descaled_hacked_image.astype(np.uint8)).save('hacked_image.png')
+Image.fromarray(descaled_hacked_image.astype(np.uint8)).save('hacked_parrot.png')

@@ -38,5 +38,3 @@ setup(
         'Environment :: Console'
     ],
 )
-
-# TODO: add archi schemes in readme
