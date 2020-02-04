@@ -1,3 +1,4 @@
+import time
 import tkinter
 
 import cv2
@@ -20,6 +21,7 @@ class CameraFrame(BaseFrame):
         self.cap = cv2.VideoCapture(0)
         self.cap.set(3, 160)
         self.cap.set(4, 120)
+        time.sleep(1)
         self.__video_stream()
 
     def _make_inference(self):

@@ -5,3 +5,4 @@ car_detector.egg-info/
 .pytest_cache/
 data/picture/*
 data/car_train_data/*
+venv

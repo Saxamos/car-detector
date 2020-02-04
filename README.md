@@ -10,14 +10,17 @@ running:
 
 ### Install the app
 
-Install the app in your virtual env. At the root of the project, run:
+Create a python3 venv and all the required packages and the app in your virtual env.
+At the root of the project, run:
 ```
+python3 -m venv venv
+pip install -r requirements
 pip install -e .
 ```
 
 ### Run the tests
 ```
-TODO
+pytest
 ```
 
 ### Launch the app
@@ -39,7 +42,6 @@ Usefull command for port forwarding (if you use ec2 instance):
 ```bash
 ssh -L <local:port>:localhost:<distant:port> <user>@<ip-adress>
 # example to forward tensorboard:
-# todo: plot tensorboard train and eval curve on same plot to compare more easily
 ssh -L 8881:localhost:6006 ubuntu@34.240.13.93
 
 ```
