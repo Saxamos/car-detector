@@ -1,0 +1,6 @@
+click==6.7
+keras==2.2.4
+opencv-python
+numpy==1.16.2
+Pillow==5.2.0
+pytest
