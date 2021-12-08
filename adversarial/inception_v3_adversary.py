@@ -15,14 +15,14 @@ from app import ROOT_PATH
 model = inception_v3.InceptionV3()
 
 # Load the image file and convert it to a numpy array
-img_path = os.path.join(ROOT_PATH, 'adversarial', 'sax.png')
+img_path = os.path.join(ROOT_PATH, "adversarial", "sax.png")
 img = image.load_img(img_path, target_size=(299, 299))
 input_image = image.img_to_array(img)
 
 # Scale the image so all pixel intensities are between [-1, 1] as the model expects
-input_image /= 255.
+input_image /= 255.0
 input_image -= 0.5
-input_image *= 2.
+input_image *= 2.0
 
 # Add a 4th dimension for batch size (as Keras expects)
 input_image = np.expand_dims(input_image, axis=0)
@@ -33,7 +33,7 @@ predictions = model.predict(input_image)
 # Convert the predictions into text and print them
 predicted_classes = inception_v3.decode_predictions(predictions, top=1)
 imagenet_id, name, confidence = predicted_classes[0][0]
-print(f'This is a {name} with {confidence * 100:.4}% confidence!')
+print(f"This is a {name} with {confidence * 100:.4}% confidence!")
 
 # Grab a reference to the first and last layer of the neural net
 model_input_layer = model.layers[0].input
@@ -67,8 +67,9 @@ cost_function = model_output_layer[0, object_type_to_fake]
 gradient_function = K.gradients(cost_function, model_input_layer)[0]
 
 # Create a Keras function that we can call to calculate the current cost and gradient
-grab_cost_and_gradients_from_model = K.function([model_input_layer, K.learning_phase()],
-                                                [cost_function, gradient_function])
+grab_cost_and_gradients_from_model = K.function(
+    [model_input_layer, K.learning_phase()], [cost_function, gradient_function]
+)
 
 cost = 0.0
 
@@ -91,15 +92,17 @@ while cost < 0.80:
     hacked_image = np.clip(hacked_image, -1.0, 1.0)
     hacked_image_crop = np.clip(hacked_image_crop, -1.0, 1.0)
 
-    print(f'Model\'s predicted likelihood that the crop is a red_wine: {cost * 100:.8}')
-    print(f'Model\'s predicted likelihood that the image is a red_wine: {cost_global * 100:.8}')
+    print(f"Model's predicted likelihood that the crop is a red_wine: {cost * 100:.8}")
+    print(
+        f"Model's predicted likelihood that the image is a red_wine: {cost_global * 100:.8}"
+    )
 
 # De-scale the image's pixels from [-1, 1] back to the [0, 255] range
 img = hacked_image[0]
-img /= 2.
+img /= 2.0
 img += 0.5
-img *= 255.
+img *= 255.0
 
 # Save the hacked image!
 im = Image.fromarray(img.astype(np.uint8))
-im.save('toto.png')
+im.save("toto.png")

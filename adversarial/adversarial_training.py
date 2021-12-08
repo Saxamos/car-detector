@@ -9,15 +9,15 @@ from keras.preprocessing import image
 
 from app import ROOT_PATH
 
-model = load_model(os.path.join(ROOT_PATH, 'model', 'model.h5'))
+model = load_model(os.path.join(ROOT_PATH, "model", "model.h5"))
 
 # Load the image file and convert it to a numpy array
-img_path = os.path.join(ROOT_PATH, 'data', 'car_train_data', 'not_car', 'parrot_37.jpg')
+img_path = os.path.join(ROOT_PATH, "data", "car_train_data", "not_car", "parrot_37.jpg")
 img = image.load_img(img_path, target_size=(128, 128))
 input_image = image.img_to_array(img)
 
 # Scale the image so all pixel intensities are between [0, 1] as the model expects
-input_image /= 255.
+input_image /= 255.0
 
 # Add a 4th dimension for batch size (as Keras expects)
 input_image = np.expand_dims(input_image, axis=0)
@@ -27,9 +27,9 @@ prediction = model.predict_classes(input_image)[0, 0]
 confidence = model.predict(input_image)[0, 0]
 
 # Convert the predictions into text and print them
-CLASS_MAPPING = {0: 'car', 1: 'not_car'}
+CLASS_MAPPING = {0: "car", 1: "not_car"}
 predicted_classes = CLASS_MAPPING[prediction]
-print(f'This is a {predicted_classes} with {confidence * 100:.4}% confidence!')
+print(f"This is a {predicted_classes} with {confidence * 100:.4}% confidence!")
 
 # Grab a reference to the first and last layer of the neural net
 model_input_layer = model.layers[0].input
@@ -59,8 +59,9 @@ cost_function = model_output_layer[0, object_type_to_fake]
 gradient_function = K.gradients(cost_function, model_input_layer)[0]
 
 # Create a Keras function that we can call to calculate the current cost and gradient
-grab_cost_and_gradients_from_model = K.function([model_input_layer, K.learning_phase()],
-                                                [cost_function, gradient_function])
+grab_cost_and_gradients_from_model = K.function(
+    [model_input_layer, K.learning_phase()], [cost_function, gradient_function]
+)
 
 cost = 1.0
 
@@ -78,11 +79,13 @@ while cost > 0.005:
     hacked_image = np.clip(hacked_image, max_change_below, max_change_above)
     hacked_image = np.clip(hacked_image, 0, 1.0)
 
-    print(f'Model\'s predicted likelihood that the image is a car: {(1 - cost) * 100:.8}')
+    print(
+        f"Model's predicted likelihood that the image is a car: {(1 - cost) * 100:.8}"
+    )
 
 # De-scale the image's pixels from [0, 1] back to the [0, 255] range
-descaled_input_image = input_image[0] * 255.
-Image.fromarray(descaled_input_image.astype(np.uint8)).save('resized_parrot.png')
+descaled_input_image = input_image[0] * 255.0
+Image.fromarray(descaled_input_image.astype(np.uint8)).save("resized_parrot.png")
 
-descaled_hacked_image = hacked_image[0] * 255.
-Image.fromarray(descaled_hacked_image.astype(np.uint8)).save('hacked_parrot.png')
+descaled_hacked_image = hacked_image[0] * 255.0
+Image.fromarray(descaled_hacked_image.astype(np.uint8)).save("hacked_parrot.png")

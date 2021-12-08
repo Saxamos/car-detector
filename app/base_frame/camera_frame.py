@@ -13,11 +13,15 @@ class CameraFrame(BaseFrame):
     def __init__(self, parent_frame, model, saved_path):
         super().__init__(parent_frame, model, saved_path)
 
-        self.text_button_start = 'Start camera'
-        self.button_start = tkinter.Button(self, text=self.text_button_start, command=self.__display_stream)
+        self.text_button_start = "Start camera"
+        self.button_start = tkinter.Button(
+            self, text=self.text_button_start, command=self.__display_stream
+        )
         self.button_start.grid()
 
-        self.button_snapshot = tkinter.Button(self, text='Snapshot', command=self._make_inference)
+        self.button_snapshot = tkinter.Button(
+            self, text="Snapshot", command=self._make_inference
+        )
         self.cap = cv2.VideoCapture(0)
         self.cap.set(3, 160)
         self.cap.set(4, 120)
@@ -27,6 +31,7 @@ class CameraFrame(BaseFrame):
     def _make_inference(self):
         # TODO: take pic with same width and height to not deform when resize
         self.button_snapshot.grid_forget()
+        import pdb;pdb.set_trace()
         image = self._resize_and_convert_input_image(self.image)
         image = self.__binarize_image(np.array(image))
         self._infer(image)
@@ -58,7 +63,7 @@ class CameraFrame(BaseFrame):
 
         if self.parent_frame.viz_entropy:
             plt.plot(pixel_intensity_histogram)
-            plt.axvline(x=threshold, color='r')
+            plt.axvline(x=threshold, color="r")
             plt.show()
         return threshold
 
@@ -75,13 +80,17 @@ class CameraFrame(BaseFrame):
 
         max_entropy, best_threshold = 0, 0
         for i in range(len(non_null_bin_indexes)):
-            dark_histogram = histogram[non_null_bin_indexes[:i + 1]]
+            dark_histogram = histogram[non_null_bin_indexes[: i + 1]]
             number_of_pixel_in_dark_histogram = cdf[non_null_bin_indexes[i]]
-            dark_entropy = self.__compute_entropy(dark_histogram, number_of_pixel_in_dark_histogram)
+            dark_entropy = self.__compute_entropy(
+                dark_histogram, number_of_pixel_in_dark_histogram
+            )
 
-            bright_histogram = histogram[non_null_bin_indexes[i + 1:]]
+            bright_histogram = histogram[non_null_bin_indexes[i + 1 :]]
             number_of_pixel_in_bright_histogram = cdf[-1] - cdf[non_null_bin_indexes[i]]
-            bright_entropy = self.__compute_entropy(bright_histogram, number_of_pixel_in_bright_histogram)
+            bright_entropy = self.__compute_entropy(
+                bright_histogram, number_of_pixel_in_bright_histogram
+            )
 
             entropy = dark_entropy + bright_entropy
             if entropy > max_entropy:
@@ -91,7 +100,9 @@ class CameraFrame(BaseFrame):
     @staticmethod
     def __compute_entropy(histogram, number_of_pixel_in_histogram):
         probability_density_function = histogram / number_of_pixel_in_histogram
-        return -np.sum(probability_density_function * np.log(probability_density_function))
+        return -np.sum(
+            probability_density_function * np.log(probability_density_function)
+        )
 
 
 """
