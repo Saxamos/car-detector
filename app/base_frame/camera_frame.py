@@ -31,7 +31,6 @@ class CameraFrame(BaseFrame):
     def _make_inference(self):
         # TODO: take pic with same width and height to not deform when resize
         self.button_snapshot.grid_forget()
-        import pdb;pdb.set_trace()
         image = self._resize_and_convert_input_image(self.image)
         image = self.__binarize_image(np.array(image))
         self._infer(image)

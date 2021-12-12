@@ -93,7 +93,8 @@ class BaseFrame(ABC, tkinter.Frame):
         self.__plot_neuron(activations[9], 10)  # 128)
         self.__plot_neuron(activations[10], 1, vmin=0, vmax=1)
 
-    def __plot_activation(self, activation, plot_height, plot_width):
+    @staticmethod
+    def __plot_activation(activation, plot_height, plot_width):
         ix = 1
         for _ in range(plot_height):
             for _ in range(plot_width):
@@ -107,7 +108,8 @@ class BaseFrame(ABC, tkinter.Frame):
         # show the figure
         plt.show()
 
-    def __plot_neuron(self, neuron, number, vmin=None, vmax=None):
+    @staticmethod
+    def __plot_neuron(neuron, number, vmin=None, vmax=None):
         ix = 1
         vmin = min(neuron[0, :number]) if vmin is None else vmin
         vmax = max(neuron[0, :number]) if vmax is None else vmax

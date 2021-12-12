@@ -6,7 +6,7 @@ from app.base_frame.base_frame import BaseFrame
 
 
 class DrawFrame(BaseFrame):
-    DEFAULT_SECONDS_TO_DRAW = 3
+    DEFAULT_SECONDS_TO_DRAW = 15
     MAX_PIXEL_INTENSITY = 255
     MIN_PIXEL_INTENSITY = 0
     COUNTER_TEXT = 100
