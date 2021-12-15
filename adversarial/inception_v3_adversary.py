@@ -5,13 +5,15 @@ https://medium.com/@ageitgey/machine-learning-is-fun-part-8-how-to-intentionally
 import os
 
 import numpy as np
-from PIL import Image
+import tensorflow as tf
 from keras import backend as K
 from keras.applications import inception_v3
 from keras.preprocessing import image
+from PIL import Image
 
 from app import ROOT_PATH
 
+tf.compat.v1.disable_v2_behavior()
 model = inception_v3.InceptionV3()
 
 # Load the image file and convert it to a numpy array

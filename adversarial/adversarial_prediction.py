@@ -1,8 +1,8 @@
 import os
 
 import numpy as np
-from keras.models import load_model
-from keras.preprocessing import image
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing import image
 
 from app import ROOT_PATH
 
@@ -15,8 +15,8 @@ def load_image_and_predict_class(img_path):
     input_image = image.img_to_array(img)
     input_image /= 255.0
     input_image = np.expand_dims(input_image, axis=0)
-    prediction = model.predict_classes(input_image)[0, 0]
     confidence = model.predict(input_image)[0, 0]
+    prediction = 1 if confidence > 0.5 else 0
     predicted_classes = CLASS_MAPPING[prediction]
     print(f"This is a {predicted_classes}")
     print(f"Probability to belong to class car: {1 - confidence:.3}")

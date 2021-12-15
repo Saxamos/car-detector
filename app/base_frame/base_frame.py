@@ -56,7 +56,9 @@ class BaseFrame(ABC, tkinter.Frame):
             self.__interpret_model(image, self.model)
 
         logging.info(f"Probability not being a car: {self.model.predict(image)[0, 0]}")
-        self.parent_frame.predicted_class = self.CLASS_MAPPING[int(self.model.predict(image)[0, 0] > 0.5)]
+        self.parent_frame.predicted_class = self.CLASS_MAPPING[
+            int(self.model.predict(image)[0, 0] > 0.5)
+        ]
         self.parent_frame.frames["gif_frame"].index = 0
         self.parent_frame.show_frame("gif_frame")
 

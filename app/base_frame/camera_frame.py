@@ -4,7 +4,7 @@ import tkinter
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
-from PIL import ImageTk, Image
+from PIL import Image, ImageTk
 
 from app.base_frame.base_frame import BaseFrame
 

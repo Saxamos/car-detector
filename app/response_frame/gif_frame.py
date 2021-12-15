@@ -2,7 +2,7 @@ import os
 import time
 import tkinter
 
-from PIL import ImageTk, Image
+from PIL import Image, ImageTk
 
 from app import ROOT_PATH
 
